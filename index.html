@@ -1,234 +1,365 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>New Tab</title>
-	<link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfmBBsMMCnqv3OaAAAAlUlEQVQoz83PIQvCABQE4E+ZQxQGxpnMgvgXxoqoQVxZWTCvrPpjrDYXzBoG/jHDQBFXBe/BC3f3uHv8BxYSvS+2J7GAyEXReVi4iEg9xJ2G2ENK6SrsNISuSiq1wMDoJYwNQKBWsdOIHJwMtZ3OMjDR2BG7WVnKxGZmpnJzsHZv223k6Ns7Olq/onLb98/tbueT/T2ejsYUrwqCFKkAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDktMTRUMTU6MTE6NTQrMDA6MDCEo9THAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE3LTA1LTExVDA4OjUzOjE4KzAwOjAwRp+EjgAAAABJRU5ErkJggg==" />
-	<style>
-		#screen,input{background-color:var(--prompt-bg-color)}
-		#input,input{color:var(--input-color)}
-		#input p,input{display:inline-block}
-		#bookmarks,*{padding:0;margin:0}
-		:root{--main-bg-color:#2e3440;--prompt-bg-color:#151515;--input-color:#6c99bb;--text-color:#d6dce8}
-		*{border:0;outline:0;font-family:monospace;font-size:1rem}
-		body{overflow:hidden;background-color:var(--main-bg-color)}
-		div#introduction p{width:56vw;margin:10% auto auto;color:var(--text-color)}
-		#screen{width:56vw;box-shadow:.1rem .1rem .7rem;border-radius:.3rem;padding:.7em 0;margin:2rem auto}
-		#input{padding-left:1.3rem;padding-right:.7rem}
-		input{width:90%;padding:1.2em 0}
-		#bookmark-filter{width:56vw;margin:auto;height:16rem;overflow:hidden;position:relative}
-		#bookmark-filter:hover{overflow-y:auto}
-		#bookmark-filter:before{content:'';width:100%;height:16rem;position:absolute;background:linear-gradient(to bottom,transparent,var(--main-bg-color));pointer-events:none}
-		#bookmarks{list-style-type:none}
-		#bookmarks li{margin:.3rem 1rem .3rem 0;float:left}
-		#bookmarks li a{color:var(--text-color);padding:.4rem;text-decoration:none}
-		#bookmarks li a:focus,#bookmarks li a:hover{text-shadow:2px 2px 8px #fff;text-decoration:underline}
-	</style>
-</head>
-<body>
-	<div id="introduction">
-		<p>Good <script>var time=new Date;time.getHours()<12?document.write("Morning"):time.getHours()>=12&&time.getHours()<=17?document.write("Afternoon"):time.getHours()>17&&time.getHours()<=24?document.write("Evening"):document.write("Night");</script>,</p>
-	</div>
-	<div id="screen">
-		<div id="input">
-			<p id="input_title"></p>
-			<input id="input_source" type="text" spellcheck="false" autocomplete="off" value="" placeholder="Enter bookmark or search prefix..." onkeyup="filter_bookmarks()" autofocus>
-		</div>
-	</div>
-	<div id="bookmark-filter">
-		<ul id="bookmarks">
-			<li><a href="https://www.aftenposten.no/">Aftenposten</a></li>
-			<li><a href="https://aurorawatch.lancs.ac.uk/">AuroraWatch</a></li>
-			<li><a href="https://www.bbc.co.uk/news">BBC News</a></li>
-			<li><a href="https://chat.beeper.com">Beeper</a></li>
-			<li><a href="https://www.bestinvest.co.uk/v2/investment-search#/">BestInvest Funds</a></li>
-			<li><a href="https://www.blockchaincenter.net/bitcoin-rainbow-chart/">Bitcoin Rainbow</a></li>
-			<li><a href="https://www.borgbase.com/repositories">BorgBase</a></li>
-			<li><a href="https://git.minskio.co.uk/">Cgit</a></li>
-			<li><a href="https://dash.cloudflare.com/">Cloudflare</a></li>
-			<li><a href="https://www.codecademy.com/learn">Codecademy</a></li>
-			<li><a href="https://coinmarketcap.com/portfolio-tracker/">CoinMarketCap Portfolio</a></li>
-			<li><a href="https://cryptovision.live/">CryptoVision</a></li>
-			<li><a href="https://www.toptal.com/developers/cssminifier/">CSS Minifier</a></li>
-			<li><a href="https://fw.draytek.com.tw/">DrayTek Firmware</a></li>
-			<li><a href="https://diskprices.com/?locale=uk">Drive Prices</a></li>
-			<li><a href="https://www.duolingo.com/">Duolingo</a></li>
-			<li><a href="https://duolinguists.wordpress.com/i-speak-english/">Duolinguists</a></li>
-			<li><a href="https://www.ebay.co.uk/mes/summary">eBay Balance</a></li>
-			<li><a href="https://www.ebay.co.uk/sh/ord/?filter=status%3AAWAITING_SHIPMENT">eBay Dispatch</a></li>
-			<li><a href="https://emulation.gametechwiki.com/index.php/Main_Page">Emulation General Wiki</a></li>
-			<li><a href="https://store.epicgames.com/en-US/free-games">Epic Games</a></li>
-			<li><a href="https://www.fanatical.com/en/">Fanatical</a></li>
-			<li><a href="https://filterlists.com/">Filter Lists</a></li>
-			<li><a href="https://fitgirl-repacks.site/">FitGirl</a></li>
-			<li><a href="https://www.flightradar24.com/">Flight Radar 24</a></li>
-			<li><a href="https://rss.minskio.co.uk/">FreshRSS</a></li>
-			<li><a href="https://github.com/breadcat/">GitHub</a></li>
-			<li><a href="https://boards.4channel.org/g/">/g/ Technology</a></li>
-			<li><a href="https://news.ycombinator.com/news">HackerNews</a></li>
-			<li><a href="https://www.hemnet.se/">Hemnet</a></li>
-			<li><a href="http://192.168.1.2/">Home AP</a></li>
-			<li><a href="http://192.168.1.1/">Home Router</a></li>
-			<li><a href="http://127.0.0.1:1313/">Hugo Local</a></li>
-			<li><a href="https://www.imdb.com/chart/top">IMDb Top 250</a></li>
-			<li><a href="https://japaneseclass.jp/">Japanese Class</a></li>
-			<li><a href="https://www.toptal.com/developers/javascript-minifier/">JavaScript Minifier</a></li>
-			<li><a href="https://www.klartale.no/">Klar Tale</a></li>
-			<li><a href="http://192.168.1.6:8080/">Kodi</a></li>
-			<li><a href="https://promo.ladbrokes.com/en/promo/stw">Ladbrokes Promo</a></li>
-			<li><a href="https://cloud.linode.com/linodes">Linode</a></li>
-			<li><a href="https://www.logicalincrements.com/">Logical Increments</a></li>
-			<li><a href="https://www.marinetraffic.com/">Marine Traffic</a></li>
-			<li><a href="https://www.meetup.com/your-events/">Meetup</a></li>
-			<li><a href="https://www.metoffice.gov.uk/public/weather/forecast/gcw9rrxn7">Met Office Weather</a></li>
-			<li><a href="https://minskio.co.uk/">Minskio</a></li>
-			<li><a href="https://myrient.erista.me/files/">Myrient</a></li>
-			<li><a href="https://nault.cc/">Nault NANO Wallet</a></li>
-			<li><a href="https://platform.nexo.io/">Nexo</a></li>
-			<li><a href="https://www.noisli.com/">Noisli</a></li>
-			<li><a href="https://cloud.oracle.com/compute/instances">Oracle</a></li>
-			<li><a href="https://console.paperspace.com/">Paperspace</a></li>
-			<li><a href="https://uk.pcpartpicker.com/list/">PC Part Picker</a></li>
-			<li><a href="https://www.royalmail.com/find-a-postcode">Postcode Finder</a></li>
-			<li><a href="https://www.northernpowergrid.com/power-cuts-map">Power Cut Map</a></li>
-			<li><a href="https://app.prolific.co/studies">Prolific</a></li>
-			<li><a href="https://raw.githubusercontent.com/qutebrowser/qutebrowser/master/doc/img/cheatsheet-big.png">Qutebrowser Cheat Sheet</a></li>
-			<li><a href="https://radiooooo.com/">Radiooooo</a></li>
-			<li><a href="https://www.lightningmaps.org/">Real Time Lightning Map</a></li>
-			<li><a href="https://old.reddit.com/">Reddit</a></li>
-			<li><a href="https://www.rightmove.co.uk/">Rightmove</a></li>
-			<li><a href="https://r-roms.github.io/">/r/Roms Megathread</a></li>
-			<li><a href="https://www.showcasecinemas.co.uk/showtimes/showcase-cinema-de-lux-leeds">Showcase</a></li>
-			<li><a href="https://jweilhammer.github.io/sliding-puzzle-solver/">Sliding Puzzle Solver</a></li>
-			<li><a href="https://open.spotify.com/">Spotify</a></li>
-			<li><a href="https://newtrackon.com/list">Stable Tracker</a></li>
-			<li><a href="https://suckless.org/">Suckless</a></li>
-			<li><a href="http://127.0.0.1:8384/">Syncthing Local</a></li>
-			<li><a href="https://oldschool.runescape.wiki/images/Teleport_map.jpg">Teleport Map</a></li>
-			<li><a href="https://torrentfreak.com/most-pirated-movies-of-2024/">TorrentFreak's Most Pirated Movies of 2024</a></li>
-			<li><a href="https://tor.minskio.co.uk">Transmission</a></li>
-			<li><a href="https://www.traveline.info/">Traveline Route Planner</a></li>
-			<li><a href="https://www.naturalreaders.com/online/">TTS NaturalReader</a></li>
-			<li><a href="https://showrss.info/timeline">TV ShowRSS</a></li>
-			<li><a href="https://dashboard.m1finance.com/share/H4sIAAAAAAACA53PzwuCMBQH8H9F3jUP05JK6BDYUSXQIiJirMea2RJdiMn-99ah0y6r43t8P-_HCGpoEGKQ2J8bgeCDpPdPoxgkld66rr09UnXF1gtJSCYm0NWCYQfxcQT1gHj8juiQPVuhBhMRF1OXZJfkFY-yqlyB9qHBlqFUlJtwMNO-K39tLb501Lc-LZilp-SH5anFF466DLNkY38euN9eHWxOfuD8_-08ygubz_VJvwFVDPxOMwIAAA?referrerCode=5QM0YPa-0rCz">Tynan Portfolio</a></li>
-			<li><a href="https://unsplash.com/">Unsplash</a></li>
-			<li><a href="https://pass.minskio.co.uk/">VaultWarden</a></li>
-			<li><a href="https://www.ventusky.com/">Ventu Sky</a></li>
-			<li><a href="https://vidyascape.org/">Vidyascape</a></li>
-			<li><a href="http://vscape.wikidot.com/">Vidyascape Wiki</a></li>
-			<li><a href="https://todo.minskio.co.uk/">Vikunja</a></li>
-			<li><a href="https://validator.w3.org/">W3C validator</a></li>
-			<li><a href="https://onthegomap.com/">Walk Mapper</a></li>
-			<li><a href="https://en.wikiquote.org/wiki/Special:Random">WikiQuote Random</a></li>
-			<li><a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a></li>
-			<li><a href="https://mail.zoho.eu/zm/#mail">Zoho Mail</a></li>
-			<li><a href="https://sheet.zoho.eu/spreadsheets">Zoho Sheets</a></li>
-			<li><a href="https://www.zoopla.co.uk/">Zoopla</a></li>
-		</ul>
-	</div>
-	<script>
-		// filter bookmarks
-		function filter_bookmarks(){var e,t,n,a;for(e=document.getElementById("input_source").value.toUpperCase(),t=document.getElementById("bookmarks").getElementsByTagName("li"),a=0;a<t.length;a++)((n=t[a].getElementsByTagName("a")[0]).textContent||n.innerText).toUpperCase().indexOf(e)>-1?t[a].style.display="":t[a].style.display="none"}
-		// functions
-		var current_block;function new_block()
-		{(current_block=document.createElement("div"))}
-		function block_log(e,n=!1){new_block()}
-		function handleKeyUp(){13===event.keyCode&&submit_command()}
-		function submit_command(){var e=document.getElementById("input_source").value
-		document.getElementById("input_source").value="",new_block(),"function"==typeof window[e.split(" ")[0]]?(block_log(config.shellPrompt+e,shell=!0),window[e.split(" ")[0]](e)):""!=e&&block_log("command not found : "+e)}
-		config={shellPrompt:"$ "}
-		document.getElementById("input_title").innerText=config.shellPrompt
-		document.getElementById("input_source").addEventListener("keyup",handleKeyUp);
-		// input box commands
-		function a(t){if("a"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.amazon.co.uk/s?k="+str.substring(1), "_self")}else window.open("https://www.amazon.co.uk/", "_self")}
-		function abb(t){if("abb"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("http://audiobookbay.fi/?s="+str.substring(1), "_self")}else window.open("http://audiobookbay.fi/", "_self")}
-		function alp(t){if("alp"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://pkgs.alpinelinux.org/packages?branch=edge&arch=x86_64&name="+str.substring(1), "_self")}else window.open("https://pkgs.alpinelinux.org/packages?name=&branch=edge&arch=x86_64", "_self")}
-		function anna(t){if("anna"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://annas-archive.org/search?q="+str.substring(1), "_self")}else window.open("https://annas-archive.org/", "_self")}
-		function ans(t){if("ans"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://galaxy.ansible.com/search?deprecated=false&keywords="+str.substring(1), "_self")}else window.open("https://galaxy.ansible.com/", "_self")}
-		function ap(t){if("ap"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.archlinux.org/packages/?sort=&q="+str.substring(1), "_self")}else window.open("https://www.archlinux.org/packages/", "_self")}
-		function archive(t){if("archive"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://web.archive.org/web/*/"+str.substring(1), "_self")}else window.open("https://web.archive.org/", "_self")}
-		function aur(t){if("aur"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://aur.archlinux.org/packages/?O=0&K="+str.substring(1), "_self")}else window.open("https://aur.archlinux.org/packages/", "_self")}
-		function aw(t){if("aw"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://wiki.archlinux.org/index.php?title=Special:Search&search="+str.substring(1), "_self")}else window.open("https://wiki.archlinux.org/", "_self")}
-		function cb(t){if("cb"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://comicvine.gamespot.com/search/?q="+str.substring(1), "_self")}else window.open("https://comicvine.gamespot.com/", "_self")}
-		function cg(t){if("cg"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.coingecko.com/en/coins/"+str.substring(1), "_self")}else window.open("https://www.coingecko.com/", "_self")}
-		function choco(t){if("choco"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://chocolatey.org/packages?q="+str.substring(1), "_self")}else window.open("https://chocolatey.org/packages", "_self")}
-		function cron(t){if("cron"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"%20"+s[o];window.open("https://crontab.guru/#"+str.substring(3), "_self")}else window.open("https://crontab.guru/", "_self")}
-		function d(t){if("d"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://start.duckduckgo.com/?q="+str.substring(1), "_self")}else window.open("https://start.duckduckgo.com/", "_self")}
-		function deb(t){if("deb"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://packages.debian.org/"+str.substring(1), "_self")}else window.open("https://packages.debian.org/", "_self")}
-		function dock(t){if("dock"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://hub.docker.com/search/?pullCount=1&q="+str.substring(1), "_self")}else window.open("https://hub.docker.com/", "_self")}
-		function down(t){if("down"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://downforeveryoneorjustme.com/"+str.substring(1), "_self")}else window.open("https://downforeveryoneorjustme.com/", "_self")}
-		function e(t){if("e"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.ebay.co.uk/sch/i.html?_nkw="+str.substring(1), "_self")}else window.open("https://www.ebay.co.uk/", "_self")}
-		function emu(t){if("emu"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://emulation.gametechwiki.com/index.php?title=Special:Search&search="+str.substring(1), "_self")}else window.open("https://emulation.gametechwiki.com/index.php", "_self")}
-		function exit(){window.close()}
-		function f(t){if("f"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"%20"+s[o];window.open("https://search.f-droid.org/?lang=en&q="+str.substring(3), "_self")}else window.open("https://f-droid.org/", "_self")}
-		function g(t){if("g"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.google.co.uk/search?udm=14&q="+str.substring(1), "_self")}else window.open("https://www.google.co.uk", "_self")}
-		function gamma(t){if("gamma"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"%20"+s[o];window.open("https://www.gamma-portal.com/voip/ipdc/searchInput.jspa#"+str.substring(3), "_self")}else window.open("https://www.gamma-portal.com/framework/home.jspa", "_self")}
-		function ge(t){if("ge"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"%20"+s[o];window.open("https://www.ge-tracker.com/names/"+str.substring(3), "_self")}else window.open("https://www.ge-tracker.com/", "_self")}
-		function gf(t){if("gf"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://gamefaqs.gamespot.com/search?game="+str.substring(1), "_self")}else window.open("https://gamefaqs.gamespot.com/", "_self")}
-		function gist(t){if("gist"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://gist.github.com/search?utf8=%E2%9C%93&q="+str.substring(1), "_self")}else window.open("https://gist.github.com/", "_self")}
-		function git(t){if("git"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://github.com/search?q="+str.substring(1), "_self")}else window.open("https://github.com/", "_self")}
-		function gl(t){if("gl"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.google.co.uk/search?btnI=1&q="+str.substring(1), "_self")}else window.open("https://www.google.co.uk", "_self")}
-		function gm(t){if("gm"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.google.co.uk/maps/search/"+str.substring(1), "_self")}else window.open("https://www.google.co.uk/maps/", "_self")}
-		function gog(t){if("gog"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"%20"+s[o];window.open("https://www.gog.com/games?query="+str.substring(3), "_self")}else window.open("https://www.gog.com/", "_self")}
-		function gogg(t){if("gogg"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"%20"+s[o];window.open("https://gog-games.com/search/"+str.substring(3), "_self")}else window.open("https://gog-games.com/", "_self")}
-		function gr(t){if("gr"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.goodreads.com/search?utf8=%E2%9C%93&query="+str.substring(1), "_self")}else window.open("https://www.goodreads.com/", "_self")}
-		function hm(t){if("hm"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://home-manager-options.extranix.com/?release=release-24.05&query="+str.substring(1), "_self")}else window.open("https://home-manager-options.extranix.com", "_self")}
-		function i(t){if("i"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.google.co.uk/search?tbm=isch&q="+str.substring(1), "_self")}else window.open("https://images.google.co.uk/", "_self")}
-		function im(t){if("im"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.imdb.com/find?ref_=nv_sr_fn&s=all&q="+str.substring(1), "_self")}else window.open("https://imdb.com/", "_self")}
-		function ip(t){if("ip"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.ip2location.com/demo/"+str.substring(1), "_self")}else window.open("https://www.ip2location.com/", "_self")}
-		function ipl(t){if("ipl"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.bbc.co.uk/iplayer/search?q="+str.substring(1), "_self")}else window.open("https://www.bbc.co.uk/iplayer/", "_self")}
-		function jack(t){if("jack"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://jack.minskio.co.uk/UI/Dashboard#search="+str.substring(1), "_self")}else window.open("https://jack.minskio.co.uk", "_self")}
-		function last(t){if("last"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.last.fm/search?q="+str.substring(1), "_self")}else window.open("https://www.last.fm/", "_self")}
-		function lut(t){if("lut"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://lutris.net/games?q="+str.substring(1), "_self")}else window.open("https://lutris.net/", "_self")}
-		function m(t){if("m"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://wego.here.com/search/"+str.substring(1), "_self")}else window.open("https://wego.here.com/", "_self")}
-		function mac(t){if("mac"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://api.macvendors.com/"+str.substring(1), "_self")}else window.open("https://macvendors.com/", "_self")}
-		function man(t){if("man"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://man.archlinux.org/search?go=Go&q="+str.substring(1), "_self")}else window.open("https://man.archlinux.org/", "_self")}
-		function mb(t){if("mb"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://musicbrainz.org/search?type=artist&limit=100&method=indexed&query="+str.substring(1), "_self")}else window.open("https://musicbrainz.org/", "_self")}
-		function mx(t){if("mx"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://mxtoolbox.com/SuperTool.aspx?action="+str.substring(1), "_self")}else window.open("https://mxtoolbox.com/SuperTool.aspx", "_self")}
-		function nix(t){if("nix"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://search.nixos.org/packages?query="+str.substring(1), "_self")}else window.open("https://nixos.org/", "_self")}
-		function no(t){if("no"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://enno.dict.cc/?s="+str.substring(1), "_self")}else window.open("https://enno.dict.cc/", "_self")}
-		function nyaa(t){if("nyaa"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://nyaa.si/?s=seeders&o=desc&q="+str.substring(1), "_self")}else window.open("https://nyaa.si/", "_self")}
-		function osm(t){if("osm"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.openstreetmap.org/search?query="+str.substring(1), "_self")}else window.open("https://www.openstreetmap.org/", "_self")}
-		function osrs(t){if("osrs"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://oldschool.runescape.wiki/?title=Special%3ASearch&search="+str.substring(1), "_self")}else window.open("https://oldschool.runescape.wiki/", "_self")}
-		function pass(t){window.open("https://pass.minskio.co.uk/", "_self")}
-		function pay(t){if("pay"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://12ft.io/"+str.substring(1), "_self")}else window.open("https://12ft.io/", "_self")}
-		function pc(t){if("pc"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://pcgamingwiki.com/w/index.php?title=Special:Search&search="+str.substring(1), "_self")}else window.open("https://pcgamingwiki.com/w/index.php", "_self")}
-		function play(t){if("play"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://play.google.com/store/search?c=apps&q="+str.substring(1), "_self")}else window.open("https://play.google.com/store/", "_self")}
-		function proton(t){if("proton"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://protondb.com/search?q="+str.substring(1), "_self")}else window.open("https://protondb.com/explore", "_self")}
-		function r(){location.reload()()}
-		function rfc(t){if("rfc"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"%20"+s[o];window.open("https://datatracker.ietf.org/doc/search?rfcs=on&name="+str.substring(3), "_self")}else window.open("https://datatracker.ietf.org/", "_self")}
-		function rs3(t){if("rs3"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://runescape.wiki/?title=Special%3ASearch&go=Go&search="+str.substring(1), "_self")}else window.open("https://runescape.wiki/", "_self")}
-		function rshs(t){if("rshs"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://secure.runescape.com/m=hiscore_oldschool/hiscorepersonal?user1="+str.substring(1), "_self")}else window.open("https://secure.runescape.com/m=hiscore_oldschool/", "_self")}
-		function rt(t){if("rt"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.rottentomatoes.com/search/?search="+str.substring(1), "_self")}else window.open("https://www.rottentomatoes.com/", "_self")}
-		function s(t){if("s"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://store.steampowered.com/search/?term="+str.substring(1), "_self")}else window.open("https://store.steampowered.com/", "_self")}
-		function sc(t){if("sc"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://github.com/koalaman/shellcheck/wiki/"+str.substring(1), "_self")}else window.open("https://github.com/koalaman/shellcheck/", "_self")}
-		function skey(t){if("skey"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://store.steampowered.com/account/registerkey?key="+str.substring(1), "_self")}else window.open("https://store.steampowered.com/", "_self")}
-		function spot(t){if("spot"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"%20"+s[o];window.open("https://open.spotify.com/search/"+str.substring(3), "_self")}else window.open("https://open.spotify.com/", "_self")}
-		function srx(t){if("srx"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://anon.sx/?q="+str.substring(1), "_self")}else window.open("https://anon.sx/", "_self")}
-		function ss(t){if("ss"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://steamspy.com/search.php?s="+str.substring(1), "_self")}else window.open("https://steamspy.com/", "_self")}
-		function st(t){if("st"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.startpage.com/do/metasearch.pl?query="+str.substring(1), "_self")}else window.open("https://www.startpage.com/", "_self")}
-		function t(t){if("t"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://tineye.com/parse?url="+str.substring(1), "_self")}else window.open("https://tineye.com/", "_self")}
-		function tm(t){if("tm"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.themoviedb.org/search?query="+str.substring(1), "_self")}else window.open("https://www.themoviedb.org/", "_self")}
-		function tmc(t){window.open("https://login.themilesconsultancy.com/Driver/TripSummary.aspx", "_self")}
-		function tmt(t){if("tmt"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.themoviedb.org/search/tv?query="+str.substring(1), "_self")}else window.open("https://www.themoviedb.org/", "_self")}
-		function todo(t){window.open("https://todo.minskio.co.uk/", "_self")}
-		function tr(t){if("tr"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://translate.google.com/?sl=auto&tl=en&text="+str.substring(1), "_self")}else window.open("https://translate.google.com/", "_self")}
-		function track(t){if("track"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.royalmail.com/track-your-item#/tracking-results/"+str.substring(1), "_self")}else window.open("https://www.royalmail.com/track-your-item", "_self")}
-		function tv(t){if("tv"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.thetvdb.com/search?query="+str.substring(1), "_self")}else window.open("https://www.thetvdb.com/", "_self")}
-		function tvt(t){if("tvt"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://tvtropes.org/pmwiki/search_result.php?q="+str.substring(1), "_self")}else window.open("https://tvtropes.org/", "_self")}
-		function ud(t){if("ud"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.urbandictionary.com/define.php?term="+str.substring(1), "_self")}else window.open("https://www.urbandictionary.com/", "_self")}
-		function ujs(t){if("ujs"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://greasyfork.org/en/scripts?q="+str.substring(1), "_self")}else window.open("https://greasyfork.org/en/scripts", "_self")}
-		function valid(t){if("valid"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://validator.w3.org/nu/?doc="+str.substring(1), "_self")}else window.open("https://validator.w3.org/nu/", "_self")}
-		function w(t){if("w"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://en.wikipedia.org/w/index.php?title=Special:Search&search="+str.substring(1), "_self")}else window.open("https://en.wikipedia.org/w/index.php", "_self")}
-		function w3c(t){if("w3c"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://validator.w3.org/nu/?doc="+str.substring(1), "_self")}else window.open("https://validator.w3.org/", "_self")}
-		function w3w(t){if("w3w"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"."+s[o];window.open("https://what3words.com/"+str.substring(1), "_self")}else window.open("https://what3words.com/", "_self")}
-		function wa(t){if("wa"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.wolframalpha.com/input/?i="+str.substring(1), "_self")}else window.open("https://www.wolframalpha.com/", "_self")}
-		function whois(t){if("whois"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://whois.gandi.net/en/results?search="+str.substring(1), "_self")}else window.open("https://whois.gandi.net/", "_self")}
-		function wikt(t){if("wikt"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://en.wiktionary.org/w/index.php?title=Special:Search&search="+str.substring(1), "_self")}else window.open("https://en.wiktionary.org/w/index.php", "_self")}
-		function wiktno(t){if("wiktno"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://no.wiktionary.org/w/index.php?title=Special:Search&search="+str.substring(1), "_self")}else window.open("https://no.wiktionary.org/w/index.php", "_self")}
-		function wine(t){if("wine"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.winehq.org/search?q="+str.substring(1), "_self")}else window.open("https://www.winehq.org/", "_self")}
-		function wno(t){if("wno"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://no.wikipedia.org/w/index.php?title=Special:Search&search="+str.substring(1), "_self")}else window.open("https://no.wikipedia.org/w/index.php", "_self")}
-		function y(t){if("y"!=t){str="";for(var s=t.split(" ").slice(1),o=0;o<s.length;o++)str=str+"+"+s[o];window.open("https://www.youtube.com/results?search_query="+str.substring(1), "_self")}else window.open("https://www.youtube.com/", "_self")}
-	</script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>New Tab</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfmBBsMMCnqv3OaAAAAlUlEQVQoz83PIQvCABQE4E+ZQxQGxpnMgvgXxoqoQVxZWTCvrPpjrDYXzBoG/jHDQBFXBe/BC3f3uHv8BxYSvS+2J7GAyEXReVi4iEg9xJ2G2ENK6SrsNISuSiq1wMDoJYwNQKBWsdOIHJwMtZ3OMjDR2BG7WVnKxGZmpnJzsHZv223k6Ns7Olq/onLb98/tbueT/T2ejsYUrwqCFKkAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDktMTRUMTU6MTE6NTQrMDA6MDCEo9THAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE3LTA1LTExVDA4OjUzOjE4KzAwOjAwRp+EjgAAAABJRU5ErkJggg==">
+    <link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: light)" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfmBBsMMCnqv3OaAAAAlUlEQVQoz83PIQvCABQE4E+ZQxQGxpnMgvgXxoqoQVxZWTCvrPpjrDYXzBoG/jHDQBFXBe/BC3f3uHv8BxYSvS+2J7GAyEXReVi4iEg9xJ2G2ENK6SrsNISuSiq1wMDoJYwNQKBWsdOIHJwMtZ3OMjDR2BG7WVnKxGZmpnJzsHZv223k6Ns7Olq/onLb98/tbueT/T2ejsYUrwqCFKkAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDktMTRUMTU6MTE6NTQrMDA6MDCEo9THAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE3LTA1LTExVDA4OjUzOjE4KzAwOjAwRp+EjgAAAABJRU5ErkJggg==">
+    <link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: dark)" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAJiS0dEAP+Hj8y/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6QQbCRUh+wpbcQAAALFJREFUKM+90SFuAlEUheHvvXRCQ8MkBIHBgxk3onVokgaJYDHsobI7qG3SoNgAhuAq2QCIpqpMeBWQMRAcXPufnHPvuSG5PtFdBIWhcEaCoYIoN9NzvmvSM5NHpa7FRfeFrjIa2NleFGztDKJM5SDTrMGTDBxUsmijo2nqzSPIvXsFLR2bB0t7L1Z+tDXw59M3eFZZhsRIy4dorI+1+Slq4tdXSMebE3UXqW4iEW7/rH+3ICa6+mb3XQAAAABJRU5ErkJggg==">
+    <style>
+      body{width:56vw;margin:auto;background-color:#2e3440;color:#d6dce8;font-family:monospace;font-size:1rem}
+      input{all:unset;width:100%;background-color:#151515;color:#6c99bb;box-shadow:.1rem .1rem .7rem #151515;border-radius:.3rem;padding:1.8rem;margin:2rem auto}
+      li.highlight,li:hover{text-shadow:2px 2px 8px #fff;text-decoration:underline;cursor:pointer}
+      li{width:fit-content;float:left;margin:.3rem 1rem .3rem 0}
+      p#datetime{margin-top:25vh}
+      p,svg{vertical-align:middle}
+      svg{width:1rem;height:1rem;padding-right:.5rem}
+      ul{list-style:none;padding:0;height:15rem;mask-image:linear-gradient(180deg, #000 10%, transparent)}
+      ul:hover{mask-image:unset;height:unset}
+    </style>
+  </head>
+  <body>
+    <p id="datetime">
+      <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="m12 8v4l3 3m6-3c0 4.9706-4.0294 9-9 9-4.97056 0-9-4.0294-9-9 0-4.97056 4.02944-9 9-9 4.9706 0 9 4.02944 9 9z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </svg><span id="datetime-text"></span>
+    </p>
+    <input type="text" id="queryInput" placeholder="Enter bookmark or search prefix..." autocomplete="off" autofocus>
+    <p id="prediction"></p>
+    <ul id="bookmarkList"></ul>
+    <script>
+      const bookmarks = [
+      { name: "/g/ Technology", url: "https://boards.4channel.org/g/" },
+      { name: "/r/Roms Megathread", url: "https://r-roms.github.io/" },
+      { name: "Aftenposten", url: "https://www.aftenposten.no/" },
+      { name: "AuroraWatch", url: "https://aurorawatch.lancs.ac.uk/" },
+      { name: "BBC News", url: "https://www.bbc.co.uk/news" },
+      { name: "Beeper", url: "https://chat.beeper.com" },
+      { name: "BestInvest Funds", url: "https://www.bestinvest.co.uk/v2/investment-search#/" },
+      { name: "Bitcoin Rainbow", url: "https://www.blockchaincenter.net/bitcoin-rainbow-chart/" },
+      { name: "BorgBase", url: "https://www.borgbase.com/repositories" },
+      { name: "Cgit", url: "https://git.minskio.co.uk/" },
+      { name: "ChatGPT", url: "https://chatgpt.com/" },
+      { name: "Cloudflare", url: "https://dash.cloudflare.com/" },
+      { name: "Codecademy", url: "https://www.codecademy.com/learn" },
+      { name: "CoinMarketCap Portfolio", url: "https://coinmarketcap.com/portfolio-tracker/" },
+      { name: "CryptoVision", url: "https://cryptovision.live/" },
+      { name: "CSS Minifier", url: "https://www.toptal.com/developers/cssminifier/" },
+      { name: "DrayTek Firmware", url: "https://fw.draytek.com.tw/" },
+      { name: "Drive Prices", url: "https://diskprices.com/?locale=uk" },
+      { name: "Duolingo", url: "https://www.duolingo.com/" },
+      { name: "Duolinguists", url: "https://duolinguists.wordpress.com/i-speak-english/" },
+      { name: "eBay Balance", url: "https://www.ebay.co.uk/mes/summary" },
+      { name: "eBay Dispatch", url: "https://www.ebay.co.uk/sh/ord/?filter=status%3AAWAITING_SHIPMENT" },
+      { name: "Emulation General Wiki", url: "https://emulation.gametechwiki.com/index.php/Main_Page" },
+      { name: "Epic Games", url: "https://store.epicgames.com/en-US/free-games" },
+      { name: "Fanatical", url: "https://www.fanatical.com/en/" },
+      { name: "Filter Lists", url: "https://filterlists.com/" },
+      { name: "FitGirl", url: "https://fitgirl-repacks.site/" },
+      { name: "Flight Radar 24", url: "https://www.flightradar24.com/" },
+      { name: "FreshRSS", url: "https://rss.minskio.co.uk/" },
+      { name: "GitHub", url: "https://github.com/breadcat/" },
+      { name: "HackerNews", url: "https://news.ycombinator.com/news" },
+      { name: "Hemnet", url: "https://www.hemnet.se/" },
+      { name: "Home AP", url: "https://192.168.1.2/" },
+      { name: "Home Router", url: "https://192.168.1.1/" },
+      { name: "Hugo Local", url: "http://127.0.0.1:1313/" },
+      { name: "IMDb Top 250", url: "https://www.imdb.com/chart/top" },
+      { name: "Japanese Class", url: "https://japaneseclass.jp/" },
+      { name: "JavaScript Minifier", url: "https://www.toptal.com/developers/javascript-minifier/" },
+      { name: "Klar Tale", url: "https://www.klartale.no/" },
+      { name: "Kodi", url: "http://192.168.1.6:8080/" },
+      { name: "Ladbrokes Promo", url: "https://promo.ladbrokes.com/en/promo/stw" },
+      { name: "Linode", url: "https://cloud.linode.com/linodes" },
+      { name: "Logical Increments", url: "https://www.logicalincrements.com/" },
+      { name: "Marine Traffic", url: "https://www.marinetraffic.com/" },
+      { name: "Meetup", url: "https://www.meetup.com/your-events/" },
+      { name: "Met Office Weather", url: "https://www.metoffice.gov.uk/public/weather/forecast/gcw9rrxn7" },
+      { name: "Minskio", url: "https://minskio.co.uk/" },
+      { name: "Myrient", url: "https://myrient.erista.me/files/" },
+      { name: "Nault NANO Wallet", url: "https://nault.cc/" },
+      { name: "Nexo", url: "https://platform.nexo.io/" },
+      { name: "Noisli", url: "https://www.noisli.com/" },
+      { name: "Oracle", url: "https://cloud.oracle.com/compute/instances" },
+      { name: "Paperspace", url: "https://console.paperspace.com/" },
+      { name: "PC Part Picker", url: "https://uk.pcpartpicker.com/list/" },
+      { name: "Postcode Finder", url: "https://www.royalmail.com/find-a-postcode" },
+      { name: "Power Cut Map", url: "https://www.northernpowergrid.com/power-cuts-map" },
+      { name: "Prolific", url: "https://app.prolific.co/studies" },
+      { name: "Qutebrowser Cheat Sheet", url: "https://raw.githubusercontent.com/qutebrowser/qutebrowser/master/doc/img/cheatsheet-big.png" },
+      { name: "Radiooooo", url: "https://radiooooo.com/" },
+      { name: "Real Time Lightning Map", url: "https://www.lightningmaps.org/" },
+      { name: "Reddit", url: "https://old.reddit.com/" },
+      { name: "Rightmove", url: "https://www.rightmove.co.uk/" },
+      { name: "Showcase", url: "https://www.showcasecinemas.co.uk/showtimes/showcase-cinema-de-lux-leeds" },
+      { name: "Sliding Puzzle Solver", url: "https://jweilhammer.github.io/sliding-puzzle-solver/" },
+      { name: "Spotify", url: "https://open.spotify.com/" },
+      { name: "Stable Tracker", url: "https://newtrackon.com/list" },
+      { name: "Suckless", url: "https://suckless.org/" },
+      { name: "Syncthing", url: "http://127.0.0.1:8384/" },
+      { name: "Teleport Map", url: "https://oldschool.runescape.wiki/images/Teleport_map.jpg" },
+      { name: "Time Zone Map", url: "https://upload.wikimedia.org/wikipedia/commons/e/ec/World_Time_Zones_Map.svg" },
+      { name: "Transmission", url: "https://tor.minskio.co.uk" },
+      { name: "Traveline Route Planner", url: "https://www.traveline.info/" },
+      { name: "TTS NaturalReader", url: "https://www.naturalreaders.com/online/" },
+      { name: "TV ShowRSS", url: "https://showrss.info/timeline" },
+      { name: "Tynan Portfolio", url: "https://dashboard.m1finance.com/share/H4sIAAAAAAACA53PzwuCMBQH8H9F3jUP05JK6BDYUSXQIiJirMea2RJdiMn-99ah0y6r43t8P-_HCGpoEGKQ2J8bgeCDpPdPoxgkld66rr09UnXF1gtJSCYm0NWCYQfxcQT1gHj8juiQPVuhBhMRF1OXZJfkFY-yqlyB9qHBlqFUlJtwMNO-K39tLb501Lc-LZilp-SH5anFF466DLNkY38euN9eHWxOfuD8_-08ygubz_VJvwFVDPxOMwIAAA?referrerCode=5QM0YPa-0rCz" },
+      { name: "Unsplash", url: "https://unsplash.com/" },
+      { name: "VaultWarden", url: "https://pass.minskio.co.uk/" },
+      { name: "Ventu Sky", url: "https://www.ventusky.com/" },
+      { name: "Vidyascape Wiki", url: "http://vscape.wikidot.com/" },
+      { name: "Vidyascape", url: "https://vidyascape.org/" },
+      { name: "Vikunja", url: "https://todo.minskio.co.uk/" },
+      { name: "W3C validator", url: "https://validator.w3.org/" },
+      { name: "Walk Mapper", url: "https://onthegomap.com/" },
+      { name: "WikiQuote Random", url: "https://en.wikiquote.org/wiki/Special:Random" },
+      { name: "Wordle", url: "https://www.nytimes.com/games/wordle/index.html" },
+      { name: "Zoho Mail", url: "https://mail.zoho.eu/zm/#mail" },
+      { name: "Zoho Sheets", url: "https://sheet.zoho.eu/spreadsheets" },
+      { name: "Zoopla", url: "https://www.zoopla.co.uk/" }
+      ];
+      
+      const commandMap = {
+      a: {base: "https://www.amazon.co.uk/",query: "https://www.amazon.co.uk/s?k={q}"},
+      abb: {base: "http://audiobookbay.fi/",query: "http://audiobookbay.fi/?s={q}"},
+      alp: {base: "https://pkgs.alpinelinux.org/packages?name=&branch=edge&arch=x86_64",query: "https://pkgs.alpinelinux.org/packages?branch=edge&arch=x86_64&name={q}"},
+      anna: {base: "https://annas-archive.org/",query: "https://annas-archive.org/search?q={q}"},
+      ans: {base: "https://galaxy.ansible.com/", query: "https://galaxy.ansible.com/search?deprecated=false&keywords={q}"},
+      ap: {base: "https://www.archlinux.org/packages/", query: "https://www.archlinux.org/packages/?sort=&q={q}"},
+      archive: {base: "https://web.archive.org/", query: "https://web.archive.org/web/*/{q}"},
+      aur: {base: "https://aur.archlinux.org/packages/", query: "https://aur.archlinux.org/packages/?O=0&K={q}"},
+      aw: {base: "https://wiki.archlinux.org/", query: "https://wiki.archlinux.org/index.php?title=Special:Search&search={q}"},
+      cb: {base: "https://comicvine.gamespot.com/", query: "https://comicvine.gamespot.com/search/?q={q}"},
+      cg: {base: "https://www.coingecko.com/", query: "https://www.coingecko.com/en/coins/{q}"},
+      choco: {base: "https://chocolatey.org/packages", query: "https://chocolatey.org/packages?q={q}"},
+      cron: {base: "https://crontab.guru/", query: "https://crontab.guru/#{q}"},
+      d: {base: "https://start.duckduckgo.com/", query: "https://start.duckduckgo.com/?q={q}"},
+      deb: {base: "https://packages.debian.org/", query: "https://packages.debian.org/{q}"},
+      dock: {base: "https://hub.docker.com/", query: "https://hub.docker.com/search/?pullCount=1&q={q}"},
+      down: {base: "https://downforeveryoneorjustme.com/", query: "https://downforeveryoneorjustme.com/{q}"},
+      e: {base: "https://www.ebay.co.uk/", query: "https://www.ebay.co.uk/sch/i.html?_nkw={q}"},
+      emu: {base: "https://emulation.gametechwiki.com/index.php", query: "https://emulation.gametechwiki.com/index.php?title=Special:Search&search={q}"},
+      f: {base: "https://f-droid.org/", query: "https://search.f-droid.org/?lang=en&q={q}"},
+      g: {base: "https://www.google.co.uk", query: "https://www.google.co.uk/search?udm=14&q={q}"},
+      gamma: {base: "https://www.gamma-portal.com/framework/home.jspa", query: "https://www.gamma-portal.com/voip/ipdc/searchInput.jspa#{q}"},
+      ge: {base: "https://www.ge-tracker.com/",query: "https://www.ge-tracker.com/names/{q}"},
+      gf: {base: "https://gamefaqs.gamespot.com/", query: "https://gamefaqs.gamespot.com/search?game={q}"},
+      gist: {base: "https://gist.github.com/", query: "https://gist.github.com/search?utf8=%E2%9C%93&q={q}"},
+      git: {base: "https://github.com/", query: "https://github.com/search?q={q}"},
+      gl: {base: "https://www.google.co.uk", query: "https://www.google.co.uk/search?btnI=1&q={q}"},
+      gm: {base: "https://www.google.co.uk/maps/", query: "https://www.google.co.uk/maps/search/{q}"},
+      gmt: {base: "https://www.google.co.uk/maps/",query: "https://www.google.co.uk/maps/dir/Brighouse/{q}/Brighouse/"},
+      gog: {base: "https://www.gog.com/", query: "https://www.gog.com/games?query={q}"},
+      gogg: {base: "https://gog-games.to/", query: "https://gog-games.to/?search={q}"},
+      gr: {base: "https://www.goodreads.com/", query: "https://www.goodreads.com/search?utf8=%E2%9C%93&query={q}"},
+      hm: {base: "https://home-manager-options.extranix.com", query: "https://home-manager-options.extranix.com/?release=release-25.05&query={q}"},
+      i: {base: "https://images.google.co.uk/", query: "https://www.google.co.uk/search?tbm=isch&q={q}"},
+      im: {base: "https://imdb.com/", query: "https://www.imdb.com/find?ref_=nv_sr_fn&s=all&q={q}"},
+      ip: {base: "https://ip.minskio.co.uk/", query: "https://www.ip2location.com/demo/{q}"},
+      ipl: {base: "https://www.bbc.co.uk/iplayer/", query: "https://www.bbc.co.uk/iplayer/search?q={q}"},
+      jack: {base: "https://jack.minskio.co.uk", query: "https://jack.minskio.co.uk/UI/Dashboard#search={q}"},
+      last: {base: "https://www.last.fm/", query: "https://www.last.fm/search?q={q}"},
+      lut: {base: "https://lutris.net/", query: "https://lutris.net/games?q={q}"},
+      m: {base: "https://wego.here.com/", query: "https://wego.here.com/search/{q}"},
+      mac: {base: "https://macvendors.com/", query: "https://api.macvendors.com/{q}"},
+      man: {base: "https://man.archlinux.org/", query: "https://man.archlinux.org/search?go=Go&q={q}"},
+      mb: {base: "https://musicbrainz.org/", query: "https://musicbrainz.org/search?type=artist&limit=100&method=indexed&query={q}"},
+      mx: {base: "https://mxtoolbox.com/SuperTool.aspx", query: "https://mxtoolbox.com/SuperTool.aspx?action={q}"},
+      nitter: {base: "https://nitter.net/", query: "https://nitter.net/search?f=users&q={q}"},
+      nix: {base: "https://nixos.org/", query: "https://search.nixos.org/packages?query={q}"},
+      no: {base: "https://enno.dict.cc/", query: "https://enno.dict.cc/?s={q}"},
+      nyaa: {base: "https://nyaa.si/", query: "https://nyaa.si/?s=seeders&o=desc&q={q}"},
+      osm: {base: "https://www.openstreetmap.org/", query: "https://www.openstreetmap.org/search?query={q}"},
+      osrs: {base: "https://oldschool.runescape.wiki/", query: "https://oldschool.runescape.wiki/?title=Special%3ASearch&search={q}"},
+      pass: {base: "https://pass.minskio.co.uk/"},
+      pay: {base: "https://12ft.io/", query: "https://12ft.io/{q}"},
+      pc: {base: "https://pcgamingwiki.com/w/index.php", query: "https://pcgamingwiki.com/w/index.php?title=Special:Search&search={q}"},
+      play: {base: "https://play.google.com/store/", query: "https://play.google.com/store/search?c=apps&q={q}"},
+      proton: {base: "https://protondb.com/explore", query: "https://protondb.com/search?q={q}"},
+      rfc: {base: "https://datatracker.ietf.org/", query: "https://datatracker.ietf.org/doc/search?rfcs=on&name={q}"},
+      rs3: {base: "https://runescape.wiki/", query: "https://runescape.wiki/?title=Special%3ASearch&go=Go&search={q}"},
+      rshs: {base: "https://secure.runescape.com/m=hiscore_oldschool/", query: "https://secure.runescape.com/m=hiscore_oldschool/hiscorepersonal?user1={q}"},
+      rt: {base: "https://www.rottentomatoes.com/", query: "https://www.rottentomatoes.com/search/?search={q}"},
+      s: {base: "https://store.steampowered.com/", query: "https://store.steampowered.com/search/?term={q}"},
+      sc: {base: "https://github.com/koalaman/shellcheck/", query: "https://github.com/koalaman/shellcheck/wiki/{q}"},
+      skey: {base: "https://store.steampowered.com/", query: "https://store.steampowered.com/account/registerkey?key={q}"},
+      spot: {base: "https://open.spotify.com/", query: "https://open.spotify.com/search/{q}"},
+      srx: {base: "https://searx.be/", query: "https://searx.be/?q={q}"},
+      ss: {base: "https://steamspy.com/", query: "https://steamspy.com/search.php?s={q}"},
+      st: {base: "https://www.startpage.com/", query: "https://www.startpage.com/do/metasearch.pl?query={q}"},
+      t: {base: "https://tineye.com/", query: "https://tineye.com/parse?url={q}"},
+      tm: {base: "https://www.themoviedb.org/", query: "https://www.themoviedb.org/search?query={q}"},
+      tmc: {base: "https://login.themilesconsultancy.com/Driver/TripSummary.aspx"},
+      tmt: {base: "https://www.themoviedb.org/", query: "https://www.themoviedb.org/search/tv?query={q}"},
+      todo: {base: "https://todo.minskio.co.uk/"},
+      tr: {base: "https://translate.google.com/", query: "https://translate.google.com/?sl=auto&tl=en&text={q}"},
+      track: {base: "https://www.royalmail.com/track-your-item", query: "https://www.royalmail.com/track-your-item#/tracking-results/{q}"},
+      tv: {base: "https://www.thetvdb.com/", query: "https://www.thetvdb.com/search?query={q}"},
+      tvt: {base: "https://tvtropes.org/", query: "https://tvtropes.org/pmwiki/search_result.php?q={q}"},
+      ud: {base: "https://www.urbandictionary.com/", query: "https://www.urbandictionary.com/define.php?term={q}"},
+      ujs: {base: "https://greasyfork.org/en/scripts", query: "https://greasyfork.org/en/scripts?q={q}"},
+      valid: {base: "https://validator.w3.org/nu/", query: "https://validator.w3.org/nu/?doc={q}"},
+      w: {base: "https://en.wikipedia.org/w/index.php", query: "https://en.wikipedia.org/w/index.php?title=Special:Search&search={q}"},
+      w3c: {base: "https://validator.w3.org/", query: "https://validator.w3.org/nu/?doc={q}"},
+      w3w: {base: "https://what3words.com/",query: "https://what3words.com/{q}"},
+      wa: {base: "https://www.wolframalpha.com/", query: "https://www.wolframalpha.com/input/?i={q}"},
+      whois: {base: "https://whois.gandi.net/", query: "https://whois.gandi.net/en/results?search={q}"},
+      wikt: {base: "https://en.wiktionary.org/w/index.php", query: "https://en.wiktionary.org/w/index.php?title=Special:Search&search={q}"},
+      wiktno: {base: "https://no.wiktionary.org/w/index.php", query: "https://no.wiktionary.org/w/index.php?title=Special:Search&search={q}"},
+      wine: {base: "https://www.winehq.org/",query: "https://www.winehq.org/search?q={q}"},
+      wno: {base: "https://no.wikipedia.org/w/index.php",query: "https://no.wikipedia.org/w/index.php?title=Special:Search&search={q}"},
+      y: {base: "https://www.youtube.com/",query: "https://www.youtube.com/results?search_query={q}"}
+      };
+      
+      const input = document.getElementById("queryInput");
+      const bookmarkList = document.getElementById("bookmarkList");
+      const predictionDisplay = document.getElementById("prediction");
+      
+      let filteredBookmarks = [...bookmarks];
+      let selectedBookmarkIndex = -1;
+      
+      function renderBookmarks() {
+      bookmarkList.innerHTML = "";
+      filteredBookmarks.forEach((bm, index) => {
+      const li = document.createElement("li");
+      li.textContent = bm.name;
+      if (index === selectedBookmarkIndex) {
+        li.classList.add("highlight");
+        // Scroll the selected item into view
+        setTimeout(() => li.scrollIntoView({ block: "nearest", behavior: "smooth" }), 0);
+      }
+      li.addEventListener("click", () => {
+        window.open(bm.url, "_self");
+      });
+      bookmarkList.appendChild(li);
+      });
+      
+      bookmarkList.style.display = filteredBookmarks.length === 0 ? "none" : "block";
+      }
+      
+      function filterBookmarks(query) {
+        selectedBookmarkIndex = -1;
+        const lower = query.toLowerCase();
+        filteredBookmarks = lower === ""
+          ? [...bookmarks]
+          : bookmarks.filter(b => b.name.toLowerCase().includes(lower));
+        renderBookmarks();
+      }
+      
+      function runCommand(prefix, args) {
+        const cmd = commandMap[prefix];
+        if (!cmd) return;
+        const url = args.length === 0
+          ? cmd.base
+          : cmd.query.replace("{q}", encodeURIComponent(args.join(" ")));
+        window.open(url, "_self");
+      }
+      
+      function hintCommand(prefix, args) {
+        const cmd = commandMap[prefix];
+        if (!cmd) return "";
+        return args.length === 0
+          ? cmd.base
+          : cmd.query.replace("{q}", encodeURIComponent(args.join(" ")));
+      }
+      
+      function handleCommand(inputValue) {
+        const parts = inputValue.trim().split(" ");
+        const prefix = parts[0].toLowerCase();
+        const args = parts.slice(1);
+      
+        if (commandMap[prefix]) {
+          runCommand(prefix, args);
+        } else {
+          const query = encodeURIComponent(inputValue);
+          window.open(`https://www.google.com/search?q=${query}`, "_self");
+        }
+      }
+      
+      function updatePrediction(inputValue) {
+        const parts = inputValue.trim().split(" ");
+        const prefix = parts[0].toLowerCase();
+        const args = parts.slice(1);
+      
+        if (commandMap[prefix]) {
+          const predicted = hintCommand(prefix, args);
+          predictionDisplay.textContent = `${prefix} » ${predicted}`;
+        } else {
+          predictionDisplay.textContent = "";
+        }
+      }
+      
+      input.addEventListener("input", (e) => {
+        filterBookmarks(e.target.value);
+        updatePrediction(e.target.value);
+      });
+      
+      input.addEventListener("keydown", (e) => {
+      if (e.key === "Tab") {
+      e.preventDefault();
+      if (filteredBookmarks.length > 0) {
+      if (e.shiftKey) {
+        selectedBookmarkIndex = (selectedBookmarkIndex - 1 + filteredBookmarks.length) % filteredBookmarks.length;
+      } else {
+        selectedBookmarkIndex = (selectedBookmarkIndex + 1) % filteredBookmarks.length;
+      }
+      renderBookmarks();
+      }
+      }
+      else if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (filteredBookmarks.length > 0) {
+            selectedBookmarkIndex = (selectedBookmarkIndex + 1) % filteredBookmarks.length;
+            renderBookmarks();
+          }
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (filteredBookmarks.length > 0) {
+            selectedBookmarkIndex = (selectedBookmarkIndex - 1 + filteredBookmarks.length) % filteredBookmarks.length;
+            renderBookmarks();
+          }
+        } else if (e.key === "Enter") {
+          if (selectedBookmarkIndex >= 0) {
+            window.open(filteredBookmarks[selectedBookmarkIndex].url, "_self");
+          } else {
+            handleCommand(input.value);
+          }
+        }
+      });
+      
+      // Initial load
+      filterBookmarks("");
+      function formatDateTime(date) {
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      
+      const dayName = days[date.getDay()];
+      const day = date.getDate();
+      const month = months[date.getMonth()];
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      
+      const getOrdinal = (n) => {
+      if (n > 3 && n < 21) return "th";
+      switch (n % 10) {
+      case 1: return "st";
+      case 2: return "nd";
+      case 3: return "rd";
+      default: return "th";
+      }
+      };
+      
+      return `${dayName} ${day}${getOrdinal(day)} ${month}, ${hours}:${minutes}`;
+      }
+      
+      function updateDateTime() {
+      const now = new Date();
+      document.getElementById("datetime-text").textContent = formatDateTime(now);
+      }
+      
+      setInterval(updateDateTime, 1000);
+      updateDateTime();
+      
+    </script>
+  </body>
 </html>
