@@ -7,14 +7,13 @@
     <link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: light)" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfmBBsMMCnqv3OaAAAAlUlEQVQoz83PIQvCABQE4E+ZQxQGxpnMgvgXxoqoQVxZWTCvrPpjrDYXzBoG/jHDQBFXBe/BC3f3uHv8BxYSvS+2J7GAyEXReVi4iEg9xJ2G2ENK6SrsNISuSiq1wMDoJYwNQKBWsdOIHJwMtZ3OMjDR2BG7WVnKxGZmpnJzsHZv223k6Ns7Olq/onLb98/tbueT/T2ejsYUrwqCFKkAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDktMTRUMTU6MTE6NTQrMDA6MDCEo9THAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE3LTA1LTExVDA4OjUzOjE4KzAwOjAwRp+EjgAAAABJRU5ErkJggg==">
     <link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: dark)" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAJiS0dEAP+Hj8y/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6QQbCRUh+wpbcQAAALFJREFUKM+90SFuAlEUheHvvXRCQ8MkBIHBgxk3onVokgaJYDHsobI7qG3SoNgAhuAq2QCIpqpMeBWQMRAcXPufnHPvuSG5PtFdBIWhcEaCoYIoN9NzvmvSM5NHpa7FRfeFrjIa2NleFGztDKJM5SDTrMGTDBxUsmijo2nqzSPIvXsFLR2bB0t7L1Z+tDXw59M3eFZZhsRIy4dorI+1+Slq4tdXSMebE3UXqW4iEW7/rH+3ICa6+mb3XQAAAABJRU5ErkJggg==">
     <style>
-      body{width:56vw;margin:auto;background-color:#2e3440;color:#d6dce8;font-family:monospace;font-size:1rem;overflow-y:hidden}
+      body{width:56vw;margin:25vh auto;background-color:#2e3440;color:#d6dce8;font-family:monospace;font-size:1rem;overflow-y:hidden}
       input{all:unset;width:100%;background-color:#151515;color:#6c99bb;box-shadow:.1rem .1rem .7rem #151515;border-radius:.3rem;padding:1.8rem;margin:2rem auto}
       li.highlight,li:hover{text-shadow:2px 2px 8px #fff;text-decoration:underline;cursor:pointer}
       li{width:fit-content;float:left;margin:.3rem 1rem .3rem 0}
-      p#datetime{margin-top:25vh}
       p,svg{vertical-align:middle}
       svg{width:1rem;height:1rem;padding-right:.5rem}
-      ul{list-style:none;padding:0;height:15rem;mask-image:linear-gradient(180deg, #000 10%, transparent)}
+      ul{list-style:none;padding:0;height:30vh;mask-image:linear-gradient(180deg, #000 10%, transparent)}
       ul:hover{mask-image:unset;height:unset}
     </style>
   </head>
@@ -142,6 +141,7 @@
       f: {base: "https://f-droid.org/", query: "https://search.f-droid.org/?lang=en&q={q}"},
       g: {base: "https://www.google.co.uk", query: "https://www.google.co.uk/search?udm=14&q={q}"},
       gamma: {base: "https://www.gamma-portal.com/framework/home.jspa", query: "https://www.gamma-portal.com/voip/ipdc/searchInput.jspa#{q}"},
+      gum: {base: "https://www.gumtree.com/", query: "https://www.gumtree.com/search?q={q}&search_location=Brighouse&distance=30"},
       ge: {base: "https://www.ge-tracker.com/",query: "https://www.ge-tracker.com/names/{q}"},
       gf: {base: "https://gamefaqs.gamespot.com/", query: "https://gamefaqs.gamespot.com/search?game={q}"},
       gist: {base: "https://gist.github.com/", query: "https://gist.github.com/search?utf8=%E2%9C%93&q={q}"},
