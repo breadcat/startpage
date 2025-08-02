@@ -55,7 +55,7 @@
       { name: "Fanatical", url: "https://www.fanatical.com/en/" },
       { name: "Filter Lists", url: "https://filterlists.com/" },
       { name: "FitGirl", url: "https://fitgirl-repacks.site/" },
-      { name: "Flagle", url: "https://www.flagle.io/" },      
+      { name: "Flagle", url: "https://www.flagle.io/" },
       { name: "Flight Radar 24", url: "https://www.flightradar24.com/" },
       { name: "FreshRSS", url: "https://rss.minskio.co.uk/" },
       { name: "GitHub", url: "https://github.com/breadcat/" },
@@ -96,7 +96,7 @@
       { name: "Showcase", url: "https://www.showcasecinemas.co.uk/showtimes/showcase-cinema-de-lux-leeds" },
       { name: "Sliding Puzzle Solver", url: "https://jweilhammer.github.io/sliding-puzzle-solver/" },
       { name: "Spotify", url: "https://open.spotify.com/" },
-      { name: "SQLite Viewer", url: "https://sqliteviewer.app/" },      
+      { name: "SQLite Viewer", url: "https://sqliteviewer.app/" },
       { name: "Stable Tracker", url: "https://newtrackon.com/list" },
       { name: "Stagit", url: "https://git.minskio.co.uk/" },
       { name: "Suckless", url: "https://suckless.org/" },
@@ -124,7 +124,7 @@
       { name: "Zoho Sheets", url: "https://sheet.zoho.eu/spreadsheets" },
       { name: "Zoopla", url: "https://www.zoopla.co.uk/" }
       ];
-      
+
       const commandMap = {
       a: {base: "https://www.amazon.co.uk/",query: "https://www.amazon.co.uk/s?k={q}"},
       abb: {base: "http://audiobookbay.fi/",query: "http://audiobookbay.fi/?s={q}"},
@@ -220,14 +220,14 @@
       wno: {base: "https://no.wikipedia.org/w/index.php",query: "https://no.wikipedia.org/w/index.php?title=Special:Search&search={q}"},
       y: {base: "https://www.youtube.com/",query: "https://www.youtube.com/results?search_query={q}"}
       };
-      
+
       const input = document.getElementById("queryInput");
       const bookmarkList = document.getElementById("bookmarkList");
       const predictionDisplay = document.getElementById("prediction");
-      
+
       let filteredBookmarks = [...bookmarks];
       let selectedBookmarkIndex = -1;
-      
+
       function renderBookmarks() {
       bookmarkList.innerHTML = "";
       filteredBookmarks.forEach((bm, index) => {
@@ -243,10 +243,10 @@
       });
       bookmarkList.appendChild(li);
       });
-      
+
       bookmarkList.style.display = filteredBookmarks.length === 0 ? "none" : "block";
       }
-      
+
       function filterBookmarks(query) {
         selectedBookmarkIndex = -1;
         const lower = query.toLowerCase();
@@ -255,7 +255,7 @@
           : bookmarks.filter(b => b.name.toLowerCase().includes(lower));
         renderBookmarks();
       }
-      
+
       function runCommand(prefix, args) {
         const cmd = commandMap[prefix];
         if (!cmd) return;
@@ -264,7 +264,7 @@
           : cmd.query.replace("{q}", encodeURIComponent(args.join(" ")));
         window.open(url, "_self");
       }
-      
+
       function hintCommand(prefix, args) {
         const cmd = commandMap[prefix];
         if (!cmd) return "";
@@ -272,12 +272,12 @@
           ? cmd.base
           : cmd.query.replace("{q}", encodeURIComponent(args.join(" ")));
       }
-      
+
       function handleCommand(inputValue) {
         const parts = inputValue.trim().split(" ");
         const prefix = parts[0].toLowerCase();
         const args = parts.slice(1);
-      
+
         if (commandMap[prefix]) {
           runCommand(prefix, args);
         } else {
@@ -285,12 +285,12 @@
           window.open(`https://www.google.com/search?q=${query}`, "_self");
         }
       }
-      
+
       function updatePrediction(inputValue) {
         const parts = inputValue.trim().split(" ");
         const prefix = parts[0].toLowerCase();
         const args = parts.slice(1);
-      
+
         if (commandMap[prefix]) {
           const predicted = hintCommand(prefix, args);
           predictionDisplay.textContent = `${prefix} » ${predicted}`;
@@ -298,12 +298,12 @@
           predictionDisplay.textContent = "";
         }
       }
-      
+
       input.addEventListener("input", (e) => {
         filterBookmarks(e.target.value);
         updatePrediction(e.target.value);
       });
-      
+
       input.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
       e.preventDefault();
@@ -336,19 +336,19 @@
           }
         }
       });
-      
+
       // Initial load
       filterBookmarks("");
       function formatDateTime(date) {
       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      
+
       const dayName = days[date.getDay()];
       const day = date.getDate();
       const month = months[date.getMonth()];
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
-      
+
       const getOrdinal = (n) => {
       if (n > 3 && n < 21) return "th";
       switch (n % 10) {
@@ -358,18 +358,18 @@
       default: return "th";
       }
       };
-      
+
       return `${dayName} ${day}${getOrdinal(day)} ${month}, ${hours}:${minutes}`;
       }
-      
+
       function updateDateTime() {
       const now = new Date();
       document.getElementById("datetime-text").textContent = formatDateTime(now);
       }
-      
+
       setInterval(updateDateTime, 1000);
       updateDateTime();
-      
+
     </script>
   </body>
 </html>
