@@ -334,6 +334,10 @@
           } else {
             handleCommand(input.value);
           }
+        } else if (e.key === "Escape") {
+          input.value = "";
+          predictionDisplay.textContent = "";
+          filterBookmarks("");
         }
       });
 
