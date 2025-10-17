@@ -7,8 +7,14 @@
     <link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: light)" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfmBBsMMCnqv3OaAAAAlUlEQVQoz83PIQvCABQE4E+ZQxQGxpnMgvgXxoqoQVxZWTCvrPpjrDYXzBoG/jHDQBFXBe/BC3f3uHv8BxYSvS+2J7GAyEXReVi4iEg9xJ2G2ENK6SrsNISuSiq1wMDoJYwNQKBWsdOIHJwMtZ3OMjDR2BG7WVnKxGZmpnJzsHZv223k6Ns7Olq/onLb98/tbueT/T2ejsYUrwqCFKkAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDktMTRUMTU6MTE6NTQrMDA6MDCEo9THAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE3LTA1LTExVDA4OjUzOjE4KzAwOjAwRp+EjgAAAABJRU5ErkJggg==">
     <link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: dark)" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAJiS0dEAP+Hj8y/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6QQbCRUh+wpbcQAAALFJREFUKM+90SFuAlEUheHvvXRCQ8MkBIHBgxk3onVokgaJYDHsobI7qG3SoNgAhuAq2QCIpqpMeBWQMRAcXPufnHPvuSG5PtFdBIWhcEaCoYIoN9NzvmvSM5NHpa7FRfeFrjIa2NleFGztDKJM5SDTrMGTDBxUsmijo2nqzSPIvXsFLR2bB0t7L1Z+tDXw59M3eFZZhsRIy4dorI+1+Slq4tdXSMebE3UXqW4iEW7/rH+3ICa6+mb3XQAAAABJRU5ErkJggg==">
     <style>
-      body{width:56vw;margin:25vh auto;background-color:#2e3440;color:#d6dce8;font-family:monospace;font-size:1rem;overflow-y:hidden}
-      input{all:unset;width:100%;background-color:#151515;color:#6c99bb;box-shadow:.1rem .1rem .7rem #151515;border-radius:.3rem;padding:1.8rem;margin:2rem auto}
+      #prediction,body{font-family:monospace;font-size:1rem}
+      #prediction:not(:empty){opacity:1}
+      #prediction{background-color:#1d1d1d;color:#88c0d0cc;box-shadow:.1rem .1rem .7rem #151515;padding: 1rem 1.8rem 1rem 1.8rem;width:100%;margin:auto;opacity:0;border-radius: 0 0 .3rem .3rem;position:relative;z-index:-1}
+      .input-container input{all:unset;background-color:#151515;color:#6c99bb;border-radius:.3rem;box-shadow:.1rem .1rem .7rem #151515;padding:1.8rem;width:100%;margin:2rem auto 0;display:block}
+      .input-container:has(#prediction:not(:empty)) input{border-radius:.3rem .3rem 0 0}
+      .input-container{position:relative;width:100%}
+      body{width:56vw;margin:25vh auto;background-color:#2e3440;color:#d6dce8;overflow-y:hidden}
+      input{margin:2rem auto}
       li.highlight,li:hover{text-shadow:2px 2px 8px #fff;text-decoration:underline;cursor:pointer}
       li{width:fit-content;float:left;margin:.3rem 1rem .3rem 0}
       p,svg{vertical-align:middle}
@@ -23,8 +29,10 @@
         <path d="m12 8v4l3 3m6-3c0 4.9706-4.0294 9-9 9-4.97056 0-9-4.0294-9-9 0-4.97056 4.02944-9 9-9 4.9706 0 9 4.02944 9 9z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
       </svg><span id="datetime-text"></span>
     </p>
-    <input type="text" id="queryInput" placeholder="Enter bookmark or search prefix..." autocomplete="off" autofocus>
-    <p id="prediction"></p>
+    <div class="input-container">
+      <input type="text" id="queryInput" placeholder="Enter bookmark or search prefix..." autocomplete="off" autofocus>
+      <p id="prediction"></p>
+    </div>
     <ul id="bookmarkList"></ul>
     <script>
       const bookmarks = [
@@ -290,17 +298,11 @@
       }
 
       function updatePrediction(inputValue) {
-        const parts = inputValue.trim().split(" ");
-        const prefix = parts[0].toLowerCase();
-        const args = parts.slice(1);
-
-        if (commandMap[prefix]) {
-          const predicted = hintCommand(prefix, args);
-          predictionDisplay.textContent = `${prefix} » ${predicted}`;
-        } else {
-          predictionDisplay.textContent = "";
+        const [prefix, ...args] = inputValue.trim().split(" ");
+        predictionDisplay.textContent = commandMap[prefix?.toLowerCase()]
+          ? hintCommand(prefix.toLowerCase(), args)
+          : "";
         }
-      }
 
       input.addEventListener("input", (e) => {
         filterBookmarks(e.target.value);
