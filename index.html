@@ -14,6 +14,7 @@
       .input-container:has(#prediction:not(:empty)) input{border-radius:.3rem .3rem 0 0}
       .input-container{position:relative;width:100%}
       body{width:56vw;margin:25vh auto;background-color:#2e3440;color:#d6dce8;overflow-y:hidden}
+      body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle, transparent 60%, #15151555 100%);}
       input{margin:2rem auto}
       li.highlight,li:hover{text-shadow:2px 2px 8px #fff;text-decoration:underline;cursor:pointer}
       li{width:fit-content;float:left;margin:.3rem 1rem .3rem 0}
