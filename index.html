@@ -309,9 +309,16 @@
           : "";
         }
 
+      function normalizeInput(raw) {
+        const spaceIndex = raw.indexOf(" ");
+        if (spaceIndex === -1) return raw.replace(/'/g, "");
+        return raw.slice(0, spaceIndex).replace(/'/g, "") + raw.slice(spaceIndex);
+      }
+
       input.addEventListener("input", (e) => {
-        filterBookmarks(e.target.value);
-        updatePrediction(e.target.value);
+        const value = normalizeInput(e.target.value);
+        filterBookmarks(value);
+        updatePrediction(value);
       });
 
       input.addEventListener("keydown", (e) => {
@@ -342,7 +349,7 @@
           if (selectedBookmarkIndex >= 0) {
             window.open(filteredBookmarks[selectedBookmarkIndex].url, "_self");
           } else {
-            handleCommand(input.value);
+            handleCommand(normalizeInput(input.value));
           }
         } else if (e.key === "Escape") {
           input.value = "";
