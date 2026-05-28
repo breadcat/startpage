@@ -2,7 +2,8 @@
 
 ![](preview.png)
 
-This project was originally forked from [EmDev21/TerminalStartpage](https://github.com/EmDev21/TerminalStartpage) for the purposes of tailoring its' features specifically to me. The project was then entirely rewritten as of [commit f32b77e](https://github.com/breadcat/startpage/commit/f32b77ebfc92c2c0b84ee0370b3d5ab4f011eabd) to fix some bugs, add some features and generally clean up the code.
+This project was originally forked from [EmDev21/TerminalStartpage](https://github.com/EmDev21/TerminalStartpage) for the purposes of tailoring its' features specifically to me. The project was then entirely rewritten as of [commit e74f1eb
+](https://github.com/breadcat/startpage/commit/e74f1eb) to fix some bugs, add some features and generally clean up the code.
 
 ## Original Features
 * Site-specific search prefixes
