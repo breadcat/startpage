@@ -39,6 +39,7 @@
     <script>
 
       const subreddits = [
+      // sort:start
       "2007scape",
       "abruptchaos",
       "anticonsumption",
@@ -144,9 +145,11 @@
       "wizardposting",
       "worldnews",
       "youshouldknow"
+      // sort:end
       ];
 
       const bookmarks = [
+      // sort:start
       { name: "/g/ Technology", url: "https://boards.4channel.org/g/" },
       { name: "/r/Roms Megathread", url: "https://r-roms.github.io/" },
       { name: "Aftenposten", url: "https://www.aftenposten.no/" },
@@ -259,9 +262,11 @@
       { name: "Zoho Mail", url: "https://mail.zoho.eu/zm/#mail" },
       { name: "Zoho Sheets", url: "https://sheet.zoho.eu/spreadsheets" },
       { name: "Zoopla", url: "https://www.zoopla.co.uk/" }
+      // sort:end
       ];
 
       const commandMap = {
+      // sort:start
       a: {base: "https://www.amazon.co.uk/",query: "https://www.amazon.co.uk/s?k={q}"},
       abb: {base: "http://audiobookbay.fi/",query: "http://audiobookbay.fi/?s={q}"},
       alp: {base: "https://pkgs.alpinelinux.org/packages?name=&branch=edge&arch=x86_64",query: "https://pkgs.alpinelinux.org/packages?branch=edge&arch=x86_64&name={q}"},
@@ -358,6 +363,7 @@
       wine: {base: "https://www.winehq.org/",query: "https://www.winehq.org/search?q={q}"},
       wno: {base: "https://no.wikipedia.org/w/index.php",query: "https://no.wikipedia.org/w/index.php?title=Special:Search&search={q}"},
       y: {base: "https://www.youtube.com/",query: "https://www.youtube.com/results?search_query={q}"}
+      // sort:end
       };
 
       const input = document.getElementById("queryInput");
