@@ -12,7 +12,7 @@ This project was originally forked from [EmDev21/TerminalStartpage](https://gith
 
 ## Rewrite Features
 * Up/Down/Tab/Shift-Tab navigation of bookmarks
-* Fallback to Google Search
+* Fallback to DDG Search
 * Case insensitive prefixes
 * Arrays for bookmarks
 * Smaller functions for prefixes
